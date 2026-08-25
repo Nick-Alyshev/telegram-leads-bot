@@ -54,10 +54,15 @@ TEMPLATES = [
 
 WSGI_APPLICATION = "config.wsgi.application"
 
+# DB_DIR дозволяє винести базу на постійний диск (Railway Volume).
+# Локально не задається — база лежить у корені проєкту.
+DB_DIR = Path(os.getenv("DB_DIR", BASE_DIR))
+DB_DIR.mkdir(parents=True, exist_ok=True)
+
 DATABASES = {
     "default": {
         "ENGINE": "django.db.backends.sqlite3",
-        "NAME": BASE_DIR / "db.sqlite3",
+        "NAME": DB_DIR / "db.sqlite3",
     }
 }
 
